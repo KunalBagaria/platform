@@ -1,0 +1,51 @@
+:root {
+	--bg: hsl(231, 22%, 12%);
+	--font: 'Mont', sans-serif;
+	--blue: hsl(227, 74%, 55%);
+	--purple-text: hsl(231, 34%, 73%);
+	--purple: hsl(267, 68%, 53%);
+}
+
+@font-face {
+	font-family: "Mont";
+	src: url("/fonts/Mont/Mont-Book.otf");
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Mont";
+	src: url("/fonts/Mont/Mont-Regular.otf");
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Mont";
+	src: url("/fonts/Mont/Mont-SemiBold.otf");
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+	background: var(--bg);
+}
+
+* {
+	font-family: var(--font);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
