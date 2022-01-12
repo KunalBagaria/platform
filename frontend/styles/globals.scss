@@ -1,11 +1,3 @@
-:root {
-	--bg: hsl(231, 22%, 12%);
-	--font: 'Mont', sans-serif;
-	--blue: hsl(227, 74%, 55%);
-	--purple-text: hsl(231, 34%, 73%);
-	--purple: hsl(267, 68%, 53%);
-}
-
 @font-face {
 	font-family: "Mont";
 	src: url("/fonts/Mont/Mont-Book.otf");
@@ -30,12 +22,22 @@
 	font-display: swap;
 }
 
+:root {
+	--bg: hsl(231, 22%, 12%);
+	--font: 'Mont', sans-serif;
+	--blue: hsl(227, 74%, 55%);
+	--purple-text: hsl(231, 34%, 73%);
+	--purple: hsl(267, 68%, 53%);
+}
+
 html,
 body {
     padding: 0;
     margin: 0;
 	background: var(--bg);
 }
+
+html { font-size: 62.5%; }
 
 * {
 	font-family: var(--font);
@@ -48,4 +50,49 @@ a {
 
 * {
     box-sizing: border-box;
+}
+
+.container {
+	max-width: 136rem;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0rem 2rem;
+}
+
+.standard-grid {
+	display: grid;
+	width: 100%;
+	height: 100%;
+	grid-template-columns: 1fr 1fr 1fr 1.3fr;
+}
+
+.blue-btn {
+	background: var(--blue);
+	font-family: inherit;
+	border: none;
+	color: white;
+	width: max-content;
+	height: max-content;
+	transition: all 0.3s ease-in-out;
+	padding: 3.5% 10%;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 1.5rem;
+	&:hover {
+		// add box shadow
+		box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
+	}
+}
+
+.v-center {
+	align-self: center;
+}
+
+.a-right {
+	justify-self: flex-end;
+}
+
+.a-left {
+	justify-self: flex-start;
 }
