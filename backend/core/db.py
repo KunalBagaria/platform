@@ -17,7 +17,7 @@ def initialize_engine() -> Callable:
             "creating 'db.sql' locally...'"
             )
         return create_engine(
-                            "sqlite:///../db.sql", 
+                            "sqlite:///./db.sql", 
                             connect_args={"check_same_thread": False}
                             )
 

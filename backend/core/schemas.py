@@ -36,23 +36,23 @@ class Seller(Base):
     total_revenue  = Column(Integer, default=0, nullable=False)
 
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True, autoincrement=True, index=True)
-#     marketplace = relationship("Marketplace", back_populates="sellers")
+
+    marketplaces = relationship("Marketplace", back_populates="seller", passive_deletes=True)
 
 
-# class Marketplace(Base):
-#     __tablename__ = "marketplaces"
+class Marketplace(Base):
+    __tablename__ = "marketplaces"
 
-#     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
-#     name = Column(String(length=25), nullable=False)
-#     description = Column(Text, nullable=True)
-#     logo = Column(String(100), default=get_random_avatar, nullable=False)
-#     banner = Column(String(100), default=get_random_banner, nullable=False)
-#     email = Column(String(length=25), nullable=True)
-#     created_on = Column(DateTime, default=datetime.utcnow, nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
+    name = Column(String(length=25), nullable=False)
+    description = Column(Text, nullable=True)
+    logo = Column(String(100), default=get_random_avatar, nullable=False)
+    banner = Column(String(100), default=get_random_banner, nullable=False)
+    email = Column(String(length=25), nullable=True)
+    created_on = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-#     seller_id = Column(Integer, ForeignKey('users.id'))
-#     seller = relationship("Seller", back_populates="marketplaces")
-
+    seller_id = Column(Integer, ForeignKey('sellers.user_id', ondelete='CASCADE'), nullable=False)
+    seller = relationship("Seller", back_populates="marketplaces")
 
 class Signature(Base):
     __tablename__ = "signatures"

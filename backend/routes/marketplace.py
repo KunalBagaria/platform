@@ -11,7 +11,7 @@ from core.models import (
 from core.schemas import (
         User,
         Seller,
-       # Marketplace
+        Marketplace
     )
 
 router = APIRouter(prefix="/marketplace")
@@ -23,9 +23,23 @@ router = APIRouter(prefix="/marketplace")
              )
 async def create(
         marketplace: CreateMarketplace, 
-        request: Request, db: Session = Depends(get_db)
+        db: Session = Depends(get_db)
         ) -> JSONResponse:
-
-    user = User(seller=True)
-    seller = Seller(user_id=user.id)
     
+    user = User(public_key=marketplace.seller_public_key, seller=True)
+    db.add(user)
+    seller = Seller(user_id=user.id)
+    db.add(seller)
+    db.commit()
+    marketplace = Marketplace(
+                            name=marketplace.name,
+                            description=marketplace.description,
+                            logo=marketplace.logo,
+                            banner=marketplace.banner,
+                            email=marketplace.email,
+                            seller_id=seller.user_id,
+                            )
+    db.add(marketplace)
+    db.commit()
+    db.refresh(marketplace)
+    return marketplace

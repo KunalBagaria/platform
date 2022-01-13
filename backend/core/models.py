@@ -13,6 +13,7 @@ class CreateSeller(BaseModel):
     banner: Optional[str]
 
 class CreateMarketplace(BaseModel):
+    seller_public_key: str
     name: str
     description: str
     logo: Optional[str]
