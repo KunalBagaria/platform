@@ -19,10 +19,10 @@ class User(Base):
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     public_key = Column(String(length=44), nullable=False, unique=True)
     name = Column(String(length=25), nullable=True)
+    seller = Column(Boolean, default=False, nullable=False)
     joined_on = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-    seller = Column(Boolean, default=False, nullable=False)
-    seller_user = relationship("Seller", back_populates="users")
+    seller_user = relationship("Seller", backref="users", uselist=False)
 
 
 class Seller(Base):
@@ -36,23 +36,22 @@ class Seller(Base):
     total_revenue  = Column(Integer, default=0, nullable=False)
 
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True, autoincrement=True, index=True)
-    user = relationship("User", back_populates="sellers")
-    marketplace = relationship("Marketplace", back_populates="sellers")
+#     marketplace = relationship("Marketplace", back_populates="sellers")
 
 
-class Marketplace(Base):
-    __tablename__ = "marketplaces"
+# class Marketplace(Base):
+#     __tablename__ = "marketplaces"
 
-    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
-    name = Column(String(length=25), nullable=False)
-    description = Column(Text, nullable=True)
-    logo = Column(String(100), default=get_random_avatar, nullable=False)
-    banner = Column(String(100), default=get_random_banner, nullable=False)
-    email = Column(String(length=25), nullable=True)
-    created_on = Column(DateTime, default=datetime.utcnow, nullable=False)
+#     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
+#     name = Column(String(length=25), nullable=False)
+#     description = Column(Text, nullable=True)
+#     logo = Column(String(100), default=get_random_avatar, nullable=False)
+#     banner = Column(String(100), default=get_random_banner, nullable=False)
+#     email = Column(String(length=25), nullable=True)
+#     created_on = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-    seller_id = Column(Integer, ForeignKey('users.id'))
-    seller = relationship("Seller", back_populates="marketplaces")
+#     seller_id = Column(Integer, ForeignKey('users.id'))
+#     seller = relationship("Seller", back_populates="marketplaces")
 
 
 class Signature(Base):

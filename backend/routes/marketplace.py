@@ -8,6 +8,11 @@ from core.models import (
                 CreateSeller,
                 CreateMarketplace
                 )
+from core.schemas import (
+        User,
+        Seller,
+       # Marketplace
+    )
 
 router = APIRouter(prefix="/marketplace")
 
@@ -21,4 +26,6 @@ async def create(
         request: Request, db: Session = Depends(get_db)
         ) -> JSONResponse:
 
-    pass
+    user = User(seller=True)
+    seller = Seller(user_id=user.id)
+    
