@@ -1,0 +1,81 @@
+.heading {
+	color: var(--purple-text);
+	font-size: 3rem;
+}
+
+.label {
+	color: var(--text);
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.form {
+	width: max-content;
+	margin-bottom: 30rem;
+}
+
+.formGroup {
+	margin-top: 3rem;
+	&:not(:first-child) {
+		margin-left: 4rem;
+	}
+}
+
+.flex {
+	display: flex;
+	width: max-content;
+}
+
+.logoInput {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 20rem;
+	height: 20rem;
+	border-radius: 2rem;
+	background: var(--gray-bg);
+	& img {
+		width: 10rem;
+		padding: 1rem;
+		transition: all 0.3s ease-in-out;
+		border-radius: 1rem;
+		&:hover {
+			background: rgb(255, 255, 255, 0.25);
+		}
+	}
+}
+
+.bannerInput {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 60rem;
+	height: 20rem;
+	border-radius: 2rem;
+	background: var(--gray-bg);
+	& img {
+		width: 10rem;
+		padding: 1rem;
+		transition: all 0.3s ease-in-out;
+		border-radius: 1rem;
+		&:hover {
+			background: rgb(255, 255, 255, 0.25);
+		}
+	}
+}
+
+.input {
+	padding-left: 1rem;
+	background: var(--gray-bg);
+	border-radius: 0.89rem;
+	height: 4rem;
+	width: 30rem;
+	border: none;
+	outline: none;
+	color: var(--purple-text);
+	font-weight: bold;
+}

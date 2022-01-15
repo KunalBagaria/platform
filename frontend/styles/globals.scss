@@ -28,6 +28,8 @@
 	--blue: hsl(227, 74%, 55%);
 	--purple-text: hsl(231, 34%, 73%);
 	--purple: hsl(267, 68%, 53%);
+	--text: white;
+	--gray-bg: hsl(232, 31%, 19%);
 }
 
 html,
@@ -35,6 +37,7 @@ body {
     padding: 0;
     margin: 0;
 	background: var(--bg);
+	scrollbar-width: thin;
 }
 
 html { font-size: 62.5%; }
@@ -52,7 +55,8 @@ a {
     box-sizing: border-box;
 }
 
-.container {
+.container,
+main {
 	max-width: 136rem;
 	width: 100%;
 	margin: 0 auto;
@@ -74,7 +78,26 @@ a {
 	width: max-content;
 	height: max-content;
 	transition: all 0.3s ease-in-out;
-	padding: 3.5% 10%;
+	padding: 1.8% 5%;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 1.5rem;
+	&:hover {
+		// add box shadow
+		box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
+	}
+}
+
+.purple-btn {
+	background: var(--purple);
+	font-family: inherit;
+	border: none;
+	color: white;
+	width: max-content;
+	height: max-content;
+	transition: all 0.3s ease-in-out;
+	padding: 1.8% 5%;
 	border-radius: 0.5rem;
 	cursor: pointer;
 	font-weight: 600;
