@@ -1,5 +1,6 @@
 import random
-
+from nacl.signing import VerifyKey
+from solathon import PublicKey
 
 def get_random_avatar():
     base_url = "https://res.cloudinary.com/f22/image/upload/v1638256420/NodeAir/"
@@ -10,3 +11,12 @@ def get_random_banner():
     base_url = "https://res.cloudinary.com/f22/image/upload/v1638256420/NodeAir/"
     options = ("1b", "2b", "3b", "4b", "5b")
     return base_url + random.choice(options) + ".png"
+
+
+def verify_signature(hash: str, signature: list, public_key: str) -> bool:
+    try:
+        vk = VerifyKey(bytes(PublicKey(public_key)))
+        vk.verify(bytes(hash, encoding="utf8"), bytes(signature))
+        return True
+    except Exception:
+        return False

@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 from sqlalchemy import (
                         Column, 
@@ -12,6 +13,8 @@ from sqlalchemy.orm import relationship
 from core.db import Base
 from utils import get_random_avatar, get_random_banner
 
+def get_uuid():
+    return uuid.uuid4().hex
 
 class User(Base):
     __tablename__ = "users"
@@ -22,20 +25,19 @@ class User(Base):
     seller = Column(Boolean, default=False, nullable=False)
     joined_on = Column(DateTime, default=datetime.utcnow, nullable=False)
 
+    hash = relationship("Hash", backref="users", uselist=False)
     seller_user = relationship("Seller", backref="users", uselist=False)
 
 
 class Seller(Base):
     __tablename__ = "sellers"
 
+    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True, index=True)
     avatar = Column(String(100), default=get_random_avatar, nullable=False)
     banner = Column(String(100), default=get_random_banner, nullable=False)
     verified = Column(Boolean, default=False, nullable=False)
-    seller = Column(Boolean, default=False, nullable=False)
     rating  = Column(Integer, default=0, nullable=False)
     total_revenue  = Column(Integer, default=0, nullable=False)
-
-    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True, autoincrement=True, index=True)
 
     marketplaces = relationship("Marketplace", back_populates="seller", passive_deletes=True)
 
@@ -51,12 +53,12 @@ class Marketplace(Base):
     email = Column(String(length=25), nullable=True)
     created_on = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-    seller_id = Column(Integer, ForeignKey('sellers.user_id', ondelete='CASCADE'), nullable=False)
+    seller_id = Column(Integer, ForeignKey('sellers.user_id', ondelete='CASCADE'))
     seller = relationship("Seller", back_populates="marketplaces")
 
-class Signature(Base):
-    __tablename__ = "signatures"
 
-    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
-    public_key = Column(String(length=44), nullable=False)
-    hash = Column(String(length=44), nullable=False)
+class Hash(Base):
+    __tablename__ = "hashes"
+
+    user_public_key = Column(Integer, ForeignKey('users.public_key'), primary_key=True, index=True)
+    hash = Column(String(length=32), default=get_uuid, nullable=False)
