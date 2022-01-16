@@ -32,7 +32,7 @@ async def startup() -> None:
             raise KeyError("You must setup REDIS_URL environment variable.")
     else:
         redis = await from_url(os.environ["REDIS_URL"], encoding="utf8")
-        await RateLimiter.init(redis)
+        await RateLimiter.init(redis, no_effect=False)
 
     Base.metadata.create_all(bind=engine)
 

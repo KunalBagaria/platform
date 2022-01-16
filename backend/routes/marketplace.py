@@ -33,7 +33,7 @@ async def create(
     db.flush() # Flushing to get the user id
     seller = Seller(user_id=user.id)
     db.add(seller)
-    user_hash = Hash(user_id=user.id)
+    user_hash = Hash(user_public_key=user.public_key)
     db.add(user_hash)
     marketplace = Marketplace(
                             name=marketplace.name,

@@ -60,5 +60,5 @@ class Marketplace(Base):
 class Hash(Base):
     __tablename__ = "hashes"
 
-    user_public_key = Column(Integer, ForeignKey('users.public_key'), primary_key=True, index=True)
+    user_public_key = Column(String(44), ForeignKey('users.public_key'), primary_key=True, index=True)
     hash = Column(String(length=32), default=get_uuid, nullable=False)
