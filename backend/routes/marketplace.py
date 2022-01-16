@@ -11,7 +11,6 @@ from core.schemas import (
         User,
         Seller,
         Marketplace,
-        Hash
     )
 from utils import verify_signature
 
@@ -28,13 +27,23 @@ async def create(
         db: Session = Depends(get_db)
         ) -> JSONResponse:
     
+    signature = marketplace.signature
+    signature = signature["data"]
+
+    verify = verify_signature(
+                            signature, 
+                            marketplace.public_key
+                            )
+    if not verify:
+        return JSONResponse(
+            status_code=403,
+            content={"error": "Error verifying signature"}
+        )
     user = User(public_key=marketplace.seller_public_key, seller=True)
     db.add(user)
     db.flush() # Flushing to get the user id
     seller = Seller(user_id=user.id)
     db.add(seller)
-    user_hash = Hash(user_public_key=user.public_key)
-    db.add(user_hash)
     marketplace = Marketplace(
                             name=marketplace.name,
                             description=marketplace.description,
@@ -47,7 +56,7 @@ async def create(
     db.commit()
     db.refresh(marketplace)
     return marketplace
-
+    
 
 @router.put("/update/{id}",
              dependencies=[Depends(Limit(times=20, seconds=5))],
@@ -61,8 +70,7 @@ async def update(
     
     signature = marketplace.signature
     signature = signature["data"]
-    user_hash = db.query(Hash).filter_by(user_public_key=marketplace.public_key)
-    verify = verify_signature(user_hash, signature, marketplace.public_key)
+    verify = verify_signature(signature, marketplace.public_key)
 
     if not verify:
         return JSONResponse(

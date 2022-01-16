@@ -13,10 +13,10 @@ def get_random_banner():
     return base_url + random.choice(options) + ".png"
 
 
-def verify_signature(hash: str, signature: list, public_key: str) -> bool:
+def verify_signature(signature: list, public_key: str) -> bool:
     try:
         vk = VerifyKey(bytes(PublicKey(public_key)))
-        vk.verify(bytes(hash, encoding="utf8"), bytes(signature))
+        vk.verify(bytes(public_key, encoding="utf8"), bytes(signature))
         return True
     except Exception:
         return False

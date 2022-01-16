@@ -8,6 +8,8 @@ class CreateMarketplace(BaseModel):
     logo: Optional[str]
     banner: Optional[str]
     email: Optional[str]
+    public_key: str
+    signature: dict
 
 class UpdateMarketPlace(BaseModel):
     name: Optional[str]
@@ -15,5 +17,8 @@ class UpdateMarketPlace(BaseModel):
     logo: Optional[str]
     banner: Optional[str]
     email: Optional[str]
-    signature: dict
     public_key: str
+    signature: dict
+
+class CreateUser(BaseModel):
+    pass

@@ -25,7 +25,6 @@ class User(Base):
     seller = Column(Boolean, default=False, nullable=False)
     joined_on = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-    hash = relationship("Hash", backref="users", uselist=False)
     seller_user = relationship("Seller", backref="users", uselist=False)
 
 
@@ -55,10 +54,3 @@ class Marketplace(Base):
 
     seller_id = Column(Integer, ForeignKey('sellers.user_id', ondelete='CASCADE'))
     seller = relationship("Seller", back_populates="marketplaces")
-
-
-class Hash(Base):
-    __tablename__ = "hashes"
-
-    user_public_key = Column(String(44), ForeignKey('users.public_key'), primary_key=True, index=True)
-    hash = Column(String(length=32), default=get_uuid, nullable=False)
