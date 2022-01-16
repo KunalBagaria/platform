@@ -26,14 +26,14 @@ app.include_router(marketplace.router)
 async def startup() -> None:
     if not os.environ.get("REDIS_URL"):
         inp = input("\nRedis URL not found, do you wish to run without rate limit? [y/n]\n")
-        if inp != "y":
+        if inp == "y":
+            await RateLimiter.init(no_effect=True)
+        else:
             raise KeyError("You must setup REDIS_URL environment variable.")
-
-    if inp != "y":
+    else:
         redis = await from_url(os.environ["REDIS_URL"], encoding="utf8")
         await RateLimiter.init(redis)
-    else:
-        await RateLimiter.init(no_effect=True)
+
     Base.metadata.create_all(bind=engine)
 
 @app.on_event("shutdown")
